@@ -13,12 +13,14 @@
 <div id="main">
 	<div id="toolbar">
 	    <button class="btn btn-primary btn-default" data-toggle="modal" data-target="#addUser">添加用户</button> 
+	    <button class="btn btn-danager btn-danger" data-toggle="modal" data-target="#editAction" ></i> 编辑用户</button>
 	    <button class="btn btn-danager btn-danger" data-toggle="modal" data-target="#deleteUser" ></i> 删除用户</button>
+		
 
 		<!-- <a class="waves-effect btn btn-warning btn-sm" href="javascript:editAction();" ><i class="zmdi zmdi-edit"></i> 编辑用户</a> -->
 		<!-- <button class="btn btn-primary btn-danger" href="javascript:deleteAction();" ></i> 删除用户</button>  -->
-		<a class="waves-effect btn btn-warning btn-sm" href="javascript:editAction();" ><i class="zmdi zmdi-edit"></i> 编辑用户</a>
-		<a class="waves-effect btn btn-primary btn-sm" href="javascript:roleAction();" ><i class="zmdi zmdi-male"></i> 用户角色</a>
+<!-- 		<a class="waves-effect btn btn-warning btn-sm" href="javascript:editAction();" ><i class="zmdi zmdi-edit"></i> 编辑用户</a>
+ -->		<a class="waves-effect btn btn-primary btn-sm" href="javascript:roleAction();" ><i class="zmdi zmdi-male"></i> 用户角色</a>
 	</div>
 	<table id="table"></table>
 </div>
@@ -121,7 +123,7 @@
                         });
                         $('.form_date').datetimepicker({
                             language : 'zh-CN',
-                            format : "yyyy-mm-dd",
+                            format : "yyyy-mm-dd hh:ii:ss",
                             todayBtn : true,
                             autoclose : true,
                             startView : 2,
@@ -325,7 +327,7 @@ function addAction() {
      $.ajax({  
     	 async: false,
          type: 'post',  
-         url: '${pageContext.request.contextPath}/common/user/userAdd',  
+         url: '${pageContext.request.contextPath}/common/user/add',  
          data : JSON.stringify({
         	 userCode : userCode,
         	 userName : userName,

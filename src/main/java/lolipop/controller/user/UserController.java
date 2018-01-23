@@ -58,14 +58,12 @@ public class UserController extends BaseController {
      * 添加用户 传入基本 sysuser
      * userid 由 uuid 生成 时间 获取当前时间
      */
-    @RequestMapping(value = "/userAdd", produces = "application/json; charset=utf-8",method = RequestMethod.POST)
-    public MsgModel userAdd(@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestBody SysUser sysUser) {
+    @RequestMapping(value = "/add", produces = "application/json; charset=utf-8",method = RequestMethod.POST)
+    @ResponseBody
+    public String userAdd(@RequestBody SysUser sysUser) {
     	BaseSupport bs=new BaseSupport();
-    	System.out.println("----------------------");
     	String uuid = bs.getUUID();
     	sysUser.setUserId(uuid);
-    	System.out.println(sysUser.getUserName());
-    	System.out.println(sysUser.getUserPhone());
     	sysUser.setUserJoindate(new Date());
     	if("admin".equals(sysUser.getUserCode())){
     		sysUser.setUserType("admin");
@@ -73,7 +71,7 @@ public class UserController extends BaseController {
     		sysUser.setUserType("general");
     	}
     	mapper.insert(sysUser);
-    	return this.resultMsg("保存成功");
+    	return "1";
     	
     }
     /*

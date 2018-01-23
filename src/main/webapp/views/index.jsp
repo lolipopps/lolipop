@@ -7,7 +7,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>lolipop</title>
+	<title>大数据管理平台</title>
 	<style>
 	/** skins **/
 	#header {
@@ -89,7 +89,7 @@
 		</li>
 		<li id="logo" class="hidden-xs">
 			<!-- <img src="${pageContext.request.contextPath}/resources/images/logo.png"/> -->
-			<span id="system_title"> lolipop </span>
+			<span id="system_title"> 大数据管理平台 </span>
 		</li>
 		<li class="pull-right">
 			<ul class="hi-menu">
