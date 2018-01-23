@@ -60,7 +60,7 @@ public class UserController extends BaseController {
      */
     @RequestMapping(value = "/add", produces = "application/json; charset=utf-8",method = RequestMethod.POST)
     @ResponseBody
-    public String userAdd(@RequestBody SysUser sysUser) {
+    public SysUser add(@RequestBody SysUser sysUser) {
     	BaseSupport bs=new BaseSupport();
     	String uuid = bs.getUUID();
     	sysUser.setUserId(uuid);
@@ -71,6 +71,27 @@ public class UserController extends BaseController {
     		sysUser.setUserType("general");
     	}
     	mapper.insert(sysUser);
+    	return sysUser;
+    	
+    }
+    
+    /**
+     * 用户修改
+     * @param sysUser
+     * @return
+     */
+    @RequestMapping(value = "/update", produces = "application/json; charset=utf-8",method = RequestMethod.POST)
+    @ResponseBody
+    public String update(@RequestBody SysUser sysUser) {
+    	sysUser.setUserJoindate(new Date());
+    	if("admin".equals(sysUser.getUserCode())){
+    		sysUser.setUserType("admin");
+    	}else{
+    		sysUser.setUserType("general");
+    	}
+    	mapper.updateByPrimaryKey(sysUser);
+    	System.out.println(sysUser.toString());
+    	System.out.println(sysUser.getUserId());
     	return "1";
     	
     }
@@ -78,14 +99,11 @@ public class UserController extends BaseController {
      * @param userId  用户Id
      * @return MsgModel 消息模型
      */
-    @RequestMapping(value = "/userDelete" ,method = RequestMethod.POST)
+    @RequestMapping(value = "/delete" , produces = "application/json; charset=utf-8",method = RequestMethod.POST)
     @ResponseBody
-    public MsgModel userDelete(String ids) {
-    	//BaseSupport bs=new BaseSupport();
-    	System.out.println("开始删除用户----------------------");
-    	System.out.println(ids);
-
-    	return this.resultMsg("删除成功");
+    public String delete(@RequestBody SysUser sysUser) {
+    	mapper.deleteByPrimaryKey(sysUser);
+    	return "1";
 
     	
     }

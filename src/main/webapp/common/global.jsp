@@ -21,5 +21,6 @@
 <script src="${pageContext.request.contextPath}/resources/plugins/fontIconPicker-2.0.0-dist/js/jquery.fonticonpicker.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/plugins/bootstrap-select-1.12.4-dist/js/bootstrap-select.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/plugins/bootstrap-select-1.12.4-dist/js/i18n/defaults-zh_CN.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/plugins/bootstrap-table-1.11.1-dist/locale/bootstrap-table-zh-CN.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/plugins/jquery.cookie.js"></script>
 <script src="${pageContext.request.contextPath}/resources/plugins/device.min.js"></script>

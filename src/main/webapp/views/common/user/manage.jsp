@@ -12,9 +12,9 @@
 <body>
 <div id="main">
 	<div id="toolbar">
-	    <button class="btn btn-primary btn-default" data-toggle="modal" data-target="#addUser">添加用户</button> 
-	    <button class="btn btn-danager btn-danger" data-toggle="modal" data-target="#editAction" ></i> 编辑用户</button>
-	    <button class="btn btn-danager btn-danger" data-toggle="modal" data-target="#deleteUser" ></i> 删除用户</button>
+	    <button class="btn btn-primary btn-default"  onclick="typeActionOperate('add')">添加用户</button> 
+	    <button class="btn btn-danager btn-danger" data-toggle="modal" onclick="typeActionOperate('update')" ></i> 编辑用户</button>
+	    <button class="btn btn-danager btn-danger" data-toggle="modal" onclick="deleteOperate()" ></i> 删除用户</button>
 		
 
 		<!-- <a class="waves-effect btn btn-warning btn-sm" href="javascript:editAction();" ><i class="zmdi zmdi-edit"></i> 编辑用户</a> -->
@@ -27,9 +27,10 @@
 
 
 <!-- 添加用户 -->
-<div id="addUser" class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="userModal" class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content col-md-10">
+        <input id="typeAction" class="hidden">
     <div style="margin-top: 10px; margin-left: 55px; display: table; ">
         <div class="row" style="margin-top: 10px; margin-bottom: 10px;">
             <div class="col-md-4 text-left"
@@ -160,7 +161,7 @@
         </div>
             <div class="modal-footer">
                 <div class="row">
-                    <button type="button" class="btn btn-primary"  onclick="addAction()">保存</button>
+                    <button type="button" class="btn btn-primary"  onclick="userAction($('#typeAction').val())">保存</button>
                     <button type="button" class="btn btn-info" data-dismiss="modal">退出</button>
                     </di>
                 </div>
@@ -171,21 +172,6 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
     </div>
-    <!-- 删除用户 -->
-  <div id="deleteUser" class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content col-md-10">
-         	<div class="modal-body">
-            	<p>是否确认删除</p>
-        	</div>
-            <div class="modal-footer">
-            	<a onclick="deleteAction()" class="btn btn-danger">确定</a>
-            	<a href="#" class="btn" data-dismiss="modal">关闭</a>
-        	</div>
-        </div>
-        </div>
-</div>
-    
     
 <!-- 角色管理 -->
 <div class="modal fade" id="roleModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
@@ -232,6 +218,27 @@
 		</div>
 	</div>
 
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog"
+		aria-labelledby="warnModalLabel" aria-hidden="true">
+		<div class="modal-dialog" style="width:300px">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="warnModalLabel">提示框</h4>
+					<input id="ope" class="hidden"> <input id="type"
+						class="hidden">
+				</div>
+				<div id="confirmMessage" class="modal-body"></div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+
+					<button type="button" class="btn btn-primary"
+						onclick="deleteAction()">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 
 <script type="text/javascript">
@@ -313,72 +320,184 @@ $('#roleSave-btn').click(function(){
 	
 });
 
+//添加用户 修改用户 类型操作
+function typeActionOperate(type){
+	if(type=="add"){
+		var userCode = $('#userCode').val(null);  
+	     var userName = $('#userName').val(null);
+	     var userPassword = $('#userPassword').val(null);
+	     var userAddress = $('#userAddress').val(null);
+	     var userEmail = $('#userEmail').val(null);
+	     var userPhone = $('#userPhone').val(null);
+	     var userBirthday = $('#userBirthday').val(null);
+	     var userPhoto = "xxx.png";
+	     var userValid = $("#userValid").val(); 
+	}else if(type=='update'){
+		var rows = $table.bootstrapTable('getSelections')[0];
+		 var userCode = $('#userCode').val(rows.userCode); 
+		 $("#userCode").attr("disabled", true);
+	     var userName = $('#userName').val(rows.userName);
+	     var userPassword = $('#userPassword').val(rows.userPassword);
+	     var userAddress = $('#userAddress').val(rows.userAddress);
+	     var userEmail = $('#userEmail').val(rows.userEmail);
+	     var userPhone = $('#userPhone').val(rows.userPhone);
+	     var userBirthday = $('#userBirthday').val(rows.userBirthday);
+	     var userPhoto = "xxx.png";
+	     var userValid = $("#userValid").val(rows.userValid); 
+	}
+	$('#typeAction').val(type);
+	$('#userModal').modal('show');
+}
+
 // 添加
-function addAction() {  
-     var userCode = $('#userCode').val();  
-     var userName = $('#userName').val();
-     var userPassword = $('#userPassword').val();
-     var userAddress = $('#userAddress').val();
-     var userEmail = $('#userEmail').val();
-     var userPhone = $('#userPhone').val();
-     var userBirthday = $('#userBirthday').val();
-     var userPhoto = "xxx.png";
-     var userValid = $("#userValid").val(); 
-     $.ajax({  
-    	 async: false,
-         type: 'post',  
-         url: '${pageContext.request.contextPath}/common/user/add',  
-         data : JSON.stringify({
-        	 userCode : userCode,
-        	 userName : userName,
-        	 userPassword : userPassword,
-        	 userAddress : userAddress,
-        	 userEmail : userEmail,
-        	 userPhone : userPhone,
-        	 userBirthday : userBirthday,
-        	 userValid : userValid
-			}),
-         dataType: 'json',  
-         contentType : 'application/json;charset=UTF-8', 
-         success: function(result) { 
-        	$("#addUser").modal("hide");
-         },
-         error : function(errorMsg) {
+function userAction(type) { 
+	if(type=='add'){
+	     var userCode = $('#userCode').val();  
+	     var userName = $('#userName').val();
+	     var userPassword = $('#userPassword').val();
+	     var userAddress = $('#userAddress').val();
+	     var userEmail = $('#userEmail').val();
+	     var userPhone = $('#userPhone').val();
+	     var userBirthday = $('#userBirthday').val();
+	     var userPhoto = "xxx.png";
+	     var userValid = $("#userValid").val();
+	    
+	     $.ajax({  
+	    	 async: false,
+	         type: 'post',  
+	         url: '${pageContext.request.contextPath}/common/user/add',  
+	         data : JSON.stringify({
+	        	 userCode : userCode,
+	        	 userName : userName,
+	        	 userPassword : userPassword,
+	        	 userAddress : userAddress,
+	        	 userEmail : userEmail,
+	        	 userPhone : userPhone,
+	        	 userBirthday : userBirthday,
+	        	 userValid : userValid
+				}),
+	         dataType: 'json',  
+	         contentType : 'application/json;charset=UTF-8', 
+	         success: function(result) { 
+	        	 $("#table").bootstrapTable('insertRow', {
+						index : 0,
+						row : result
+					});
+	        	$("#userModal").modal("hide");
+	         },
+	         error : function(errorMsg) {
+					alert("保存失败,请联系管理员!");
+				}
+	     });  
+	}else if(type=='update'){
+		 var rows = $table.bootstrapTable('getSelections')[0];
+		 var userId=rows.userId;
+		 var userCode = $('#userCode').val();  
+	     var userName = $('#userName').val();
+	     var userPassword = $('#userPassword').val();
+	     var userAddress = $('#userAddress').val();
+	     var userEmail = $('#userEmail').val();
+	     var userPhone = $('#userPhone').val();
+	     var userBirthday = $('#userBirthday').val();
+	     var userPhoto = "xxx.png";
+	     var userValid = $("#userValid").val();
+	     if(userValid==null){
+	    	 userValid=true;
+	     }
+	     $.ajax({  
+	    	 async: false,
+	         type: 'post',  
+	         url: '${pageContext.request.contextPath}/common/user/update',  
+	         data : JSON.stringify({
+	        	 userId	:	userId,
+	        	 userCode : userCode,
+	        	 userName : userName,
+	        	 userPassword : userPassword,
+	        	 userAddress : userAddress,
+	        	 userEmail : userEmail,
+	        	 userPhone : userPhone,
+	        	 userBirthday : userBirthday,
+	        	 userValid : userValid
+				}),
+	         dataType: 'json',  
+	         contentType : 'application/json;charset=UTF-8', 
+	         success: function(result) { 
+	        	/* var curIndexs = $("#table").bootstrapTable('getSelections');
+				$("#table").bootstrapTable('updateCell', {
+					index : curIndexs[0].index,
+					field : 'userCode',
+					value : userCode
+				});
+				$("#table").bootstrapTable('updateCell', {
+					index : curIndexs[0].index,
+					field : 'userName',
+					value : userName
+				});
+				$("#table").bootstrapTable('updateCell', {
+					index : curIndexs[0].index,
+					field : 'userAddress',
+					value : userAddress
+				});
+				$("#table").bootstrapTable('updateCell', {
+					index : curIndexs[0].index,
+					field : 'userEmail',
+					value : userEmail
+				});
+				$("#table").bootstrapTable('updateCell', {
+					index : curIndexs[0].index,
+					field : 'userPhone',
+					value : userPhone
+				});
+				$("#table").bootstrapTable('updateCell', {
+					index : curIndexs[0].index,
+					field : 'userBirthday',
+					value : userBirthday
+				});
+				$("#table").bootstrapTable('updateCell', {
+					index : curIndexs[0].index,
+					field : 'userValid',
+					value : userValid
+				}); */
+	        	$("#userModal").modal("hide");
+	         },
+	         error : function(errorMsg) {
+					alert("修改失败,请联系管理员!");
+				}
+	     });  
+	}
+}  
+// 删除预操作
+function deleteOperate() {
+	$("#confirmModal").modal("show");
+	$("#confirmMessage").text("你确定要删除吗？");
+}
+//删除
+function deleteAction() {
+	
+	var rows = $table.bootstrapTable('getSelections')[0];
+	var userId=rows.userId;
+	var userCode=rows.userCode;
+	$.ajax({  
+   	 async: false,
+        type: 'post',  
+        url: '${pageContext.request.contextPath}/common/user/delete',  
+        data : JSON.stringify({userId:userId,userCode:userCode}),
+        dataType: 'json',  
+        contentType : 'application/json;charset=UTF-8', 
+        success: function(result) { 
+        	/* $("#table").bootstrapTable('remove', {
+				field : 'userCode',
+				values : userCode
+			}); */
+        	$("#confirmModal").modal("hide");
+        },
+        error : function(errorMsg) {
 				alert("保存失败,请联系管理员!");
 			}
-     });   
-}  
-// 删除
-function deleteAction() {
-	var rows = $table.bootstrapTable('getSelections');
-	if (rows.length == 0) {
-		$.confirm({
-			title: false,
-			content: '请至少选择一条记录！',
-			autoClose: 'cancel|3000',
-			backgroundDismiss: true,
-			buttons: {
-				cancel: {
-					text: '取消',
-					btnClass: 'waves-effect waves-button'
-				}
-			}
-		});
-	} else {
-		var ids = [];
-		var names = [];
-		for (var i in rows) {
-			ids.push(rows[i].userId);
-			names.push(rows[i].userName);
-		}
-		$("#deleteUser").modal("hide");
-		$.post('${pageContext.request.contextPath}/common/user/userDelete',{'ids' : Sting(ids)}, function(data) {
-			alert(data.msg);
-		});
-		$.alert('删除：id=' + names.join("-"));
-		
-	}
+    });  
 }
+
+
 // 用户角色
 function roleAction() {
 	var rows = $table.bootstrapTable('getSelections');

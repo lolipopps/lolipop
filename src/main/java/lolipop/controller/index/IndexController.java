@@ -64,7 +64,6 @@ public class IndexController extends BaseController {
      */
     @RequestMapping("/{errorCode}/error")
     public String error(@PathVariable String errorCode) {
-        System.out.println(errorCode);
         return "error";
     }
 
