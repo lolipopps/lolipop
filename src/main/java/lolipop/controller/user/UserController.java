@@ -44,7 +44,7 @@ public class UserController extends BaseController {
         return "common/user/manage";
     }
 
-    @RequestMapping(value = "/list", method = RequestMethod.POST)
+   /* @RequestMapping(value = "/list", method = RequestMethod.POST)
     @ResponseBody
     public PageModel<SysUser> list(int offset, int limit, String search, String sort, String order) {
         this.offsetPage(offset, limit);
@@ -52,6 +52,15 @@ public class UserController extends BaseController {
         example.setOrderByClause("USER_JOINDATE DESC");
         List<SysUser> list = mapper.selectByExample(example);
         return this.resultPage(list);
+    }*/
+    
+     @RequestMapping(value = "/list", method = RequestMethod.POST)
+    @ResponseBody
+    public List<SysUser> list() {
+        SysUserExample example = new SysUserExample();
+        example.setOrderByClause("USER_JOINDATE DESC");
+        List<SysUser> list = mapper.selectByExample(example);
+        return list;
     }
 
     /*
@@ -90,8 +99,6 @@ public class UserController extends BaseController {
     		sysUser.setUserType("general");
     	}
     	mapper.updateByPrimaryKey(sysUser);
-    	System.out.println(sysUser.toString());
-    	System.out.println(sysUser.getUserId());
     	return "1";
     	
     }
@@ -143,7 +150,6 @@ public class UserController extends BaseController {
     @ResponseBody
     public String upload(HttpServletRequest request) {
         List<String> fileNames = this.fileUpLoad(request);
-        System.out.println(fileNames);
         return "success";
     }
 
