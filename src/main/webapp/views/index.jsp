@@ -267,9 +267,10 @@
 				<p><b>项目使用 Maven 构建便于项目管理，支持 MySql、Oracle、Mongodb 等主流数据库</b></p>
 				<p><b>前端采用基于 Boostrap 实现的响应式布局，支持移动端，并集成了一系列的动画效果插件，整体界面美观大方，可优雅的与后台完成交互操作</b></p>
 				<p><b>项目目标为中小型企业打造全方位的J2EE企业级开发解决方案</b></p>
-				<p><b>代码已托管至<a href="https://github.com/micyo202/yan"> github</a>，目前正在不断完善，敬请期待...</b></p>
-				<p>Created by Yanzheng on 2017-08-01</p>
-				<p>Copyright <a href="https://github.com/micyo202" target="_blank">https://github.com/micyo202</a>. All rights reserved.</p>
+				<p><b>该项目已经在github上作为开源代码共享给喜爱javaweb开发的朋友，希望喜爱撸代码的朋友看完提提意见。</b></p>
+				<p><b>代码已托管至<a href="https://github.com/lolipopps/lolipop"> github</a></b></p>
+				<p>Created by Orange on 2018-01-26</p>
+				<p>Copyright <a href="https://github.com/lolipopps/lolipop" target="_blank">https://github.com/lolipopps/lolipop</a>. All rights reserved.</p>
 			</div>
 		</div>
 	</section>

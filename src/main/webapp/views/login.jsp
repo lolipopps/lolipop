@@ -6,7 +6,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>用户登录</title>
+<title>欢迎登录大数据管理平台</title>
 <link href="${pageContext.request.contextPath}/resources/css/login.css"
 	rel="stylesheet">
 </head>
@@ -73,7 +73,6 @@
 						remember : $('#remember').is(":checked")
 					},
 					function(data) {
-						 console.info(data)	
 						if (data.status == 0) {
 							$.alert(data.msg);
 						} else {
@@ -83,7 +82,7 @@
 							}else{
 								$.cookie('loginCookie', null);
 							}
-							location.href = '${pageContext.request.contextPath}'+ data.url; 
+							location.href = '${pageContext.request.contextPath}'+ data.url;
 						}
 					});
 		});
